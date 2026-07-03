@@ -174,7 +174,7 @@ if email and password and fetch_btn:
                 hovertemplate="<b>%{customdata[0]}</b><br>📍 %{customdata[3]}<br>Distance: %{y} km<br>Time: %{customdata[1]}<br>Pace: %{customdata[2]}<extra></extra>"
             )
             
-            st.plotly_chart(fig_bar, use_container_width=True)
+            st.plotly_chart(fig_bar, width='stretch')
             
             # --- 5. MULTI-YEAR RECURRING HEATMAPS ---
             st.header("🔥 Multi-Year Consistency Grid")
@@ -244,7 +244,7 @@ if email and password and fetch_btn:
                     height=200, 
                     margin=dict(t=5, b=15, l=10, r=10)
                 )
-                st.plotly_chart(fig_heat, use_container_width=True)
+                st.plotly_chart(fig_heat, width='stretch')
                 
             
     except Exception as e:
