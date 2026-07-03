@@ -15,6 +15,7 @@ with st.sidebar:
     st.header("Garmin Authentication")
     email = st.text_input("Email", type="default")
     password = st.text_input("Password", type="password")
+    history_n = st.number_input("History N",value=100,help="How many historical runs to load")
     fetch_btn = st.button("Fetch My Runs")
 
 
@@ -27,11 +28,11 @@ def get_garmin_client(email, password):
 
 
 @st.cache_data(show_spinner="Downloading running history...")
-def fetch_running_data(email, password):
+def fetch_running_data(email, password,history_n):
     client = get_garmin_client(email, password)
 
     # Pulling last 100 activities (adjust limit as needed)
-    activities = client.get_activities(0, 300)
+    activities = client.get_activities(0, history_n)
 
     run_data = []
     for act in activities:
@@ -78,7 +79,7 @@ def fetch_running_data(email, password):
 # --- DASHBOARD LOGIC ---
 if email and password and fetch_btn:
     try:
-        df = fetch_running_data(email, password)
+        df = fetch_running_data(email, password,history_n)
 
         if df.empty:
             st.warning("Connected! But no running activities were found.")
